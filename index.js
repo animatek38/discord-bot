@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits, Collection, Routes, SlashCommandBuilder, Application } = require('discord.js');
 const fs = require('fs')
+require('dotenv').config()
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -10,7 +11,8 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions
     ]
 });
-const { token } = require(__dirname + '/config.json');
+const { token } = process.env
+console.log(token);
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
 
