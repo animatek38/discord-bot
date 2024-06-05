@@ -15,9 +15,6 @@ module.exports = {
 			        .setDescription('the video to be searched')),
 
 	execute(interaction) {
-                i = 0
-                i = i+1
-                console.log(i)
         if(!interaction.member.voice.channel){
                 interaction.reply('please join a channel first')
                 return
