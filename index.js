@@ -13,11 +13,16 @@ const client = new Client({
 const { token } = require(__dirname + '/config.json');
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
-const { OpusEncoder } = require('@discordjs/opus');
-const { generateDependencyReport } = require('@discordjs/voice');
-console.log(generateDependencyReport())
-const encoder = new OpusEncoder(48000, 2);
 
+try {
+	const { OpusEncoder } = require('@discordjs/opus');
+	const { generateDependencyReport } = require('@discordjs/voice');
+	console.log(generateDependencyReport())
+	const encoder = new OpusEncoder(48000, 2);
+} catch (error) {
+	console.log('failed to create audio player')
+	console.log(error)
+}
 
 // liste les commandes
 var commands = new Collection()
