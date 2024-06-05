@@ -24,7 +24,7 @@ try {
 } catch (error) {
 	console.log('failed to create audio player')
 	console.log(error)
-}
+} 	
 
 // liste les commandes
 var commands = new Collection()
