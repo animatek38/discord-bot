@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, Client } = require('discord.js');
-const {joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior } = require('@discordjs/voice')
+const {joinVoiceChannel, createAudioPlayer, createAudioResource } = require('@discordjs/voice')
 const { exec } = require("child_process");
 const youtubesearchapi = require("youtube-search-api");
 const fs = require('fs')
@@ -86,7 +86,6 @@ module.exports = {
                 interaction.editReply(`playing`)
                 const player = createAudioPlayer();
                 const resource = createAudioResource(`./audio/${id}.opus`,{ inlineVolume: true });
-                resource.volume.setVolume(0.1);
                 const connection = joinVoiceChannel({
                 channelId: interaction.member.voice.channel.id,
                 guildId: interaction.member.voice.channel.guild.id,
