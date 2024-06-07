@@ -17,9 +17,11 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 try {
 	const { OpusEncoder } = require('@discordjs/opus');
-	const { generateDependencyReport } = require('@discordjs/voice');
+	const { generateDependencyReport, createAudioPlayer } = require('@discordjs/voice');
 	console.log(generateDependencyReport())
 	const encoder = new OpusEncoder(48000, 2);
+	global.queue = []
+	global.player = createAudioPlayer();
 } catch (error) {
 	console.log('failed to create audio player')
 	console.log(error)
@@ -35,7 +37,6 @@ for (const file of commandFiles) {
     commands.set(command.data.name, {data: command.data, execute: command.execute})
 }
 // When the client is ready, run this code (only once)
-
 
 var channel = []
 let clientId
@@ -89,5 +90,18 @@ function updateCommand(clientId, serverId) {
 };
 
 
+const joinShit = require('./commands/join.js')
+const AudioPlayerStatus  = require('@discordjs/voice')
+// console.log(AudioPlayerStatus);
+// global.player.on(AudioPlayerStatus.Idle, () => {
+// });
 
-// Login to Discord with your client's token
+player.on('stateChange', (oldState, newState) => {
+	console.log(typeof((newState.status)));
+	console.log(newState.status);
+	if(newState.status == 'idle'){
+		console.log('playing next');
+		global.queue.shift()
+		joinShit.playNext()
+	}
+});

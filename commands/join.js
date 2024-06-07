@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, Client } = require('discord.js');
-const {joinVoiceChannel, createAudioPlayer, createAudioResource } = require('@discordjs/voice')
+const {joinVoiceChannel, createAudioResource, getVoiceConnection  } = require('@discordjs/voice')
 const { exec } = require("child_process");
 const youtubesearchapi = require("youtube-search-api");
 const fs = require('fs')
@@ -46,7 +46,6 @@ module.exports = {
                         console.error(result)
                         return
                 }
-                console.log(result);
                 if(result.items.length < 1){
                         interaction.editReply("error getting the video, please use the name of the video instead")
                         console.warn(`error getting ${arg}`)
@@ -98,21 +97,52 @@ module.exports = {
         search(interaction.options.data[0].value)
         
         function startPlaying(id) {
+                if(global.queue.length == 0){
+                addToQueue(id)
                 interaction.editReply(`playing`)
-                const player = createAudioPlayer();
                 const resource = createAudioResource(`./audio/${id}.opus`,{ inlineVolume: true });
                 const connection = joinVoiceChannel({
                 channelId: interaction.member.voice.channel.id,
                 guildId: interaction.member.voice.channel.guild.id,
                         adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                 });
-                player.play(resource);
-                connection.subscribe(player);
+                global.player.play(resource);
+                connection.subscribe(global.player);
+                }else{
+                        interaction.editReply('added to queue')
+                        addToQueue(id)
+                }
         }
 
 
 
 
+        //functions that take care of the queue
+        function addToQueue(id) {
+                global.queue.push(id)
+        }
+        
+        function readQueue(params) {
+                console.log(global.queue);
+        }
+        
+        function removeFromQueue() {
+                global.queue.shift()
+        }
+
         console.log(`playing sound by ${interaction.member.user.username}`)
-	}
+	},
+        playNext(){
+		console.log('playing next');
+                const resource = createAudioResource(`./audio/${global.queue[0]}.opus`,{ inlineVolume: true });
+                // const connection = joinVoiceChannel({
+                // channelId: interaction.member.voice.channel.id,
+                // guildId: interaction.member.voice.channel.guild.id,
+                //         adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
+                // });
+                const connection = getVoiceConnection('651120444237152266');
+                console.log(connection);
+                global.player.play(resource);
+                connection.subscribe(global.player);
+        }
 }
