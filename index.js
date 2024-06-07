@@ -25,7 +25,7 @@ try {
 	console.log('failed to create audio player')
 	console.log(error)
 } 	
-
+fs.rm('queue.txt')
 // liste les commandes
 var commands = new Collection()
 var commandThatWillBeAdded = new Collection()
