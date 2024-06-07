@@ -19,17 +19,17 @@ module.exports = {
                 interaction.reply('please join a channel first')
                 return
         }
-        
-        interaction.deferReply();
 
 
         async function download(vidId) {
                 interaction.editReply(`downloading`)
                 try {
-                        const {stdout, stderr} = await execPromise(`yt-dlp -P audio -o ${vidId} -x ${vidId}`)
+                        const {stdout, stderr} = await execPromise(`yt-dlp -P audio -o ${vidId} -x --audio-format opus ${vidId}`)
                 } catch (err) {
-                        console.log('error downloading video')
+                        console.error('error downloading video')
                         console.error(err);
+                        interaction.editReply("there was a problem downloading the audio please try again")
+                        return
                 }
 
                 console.log('finished downloading')
@@ -37,12 +37,27 @@ module.exports = {
         }
 
         async function search(arg){
+                await interaction.deferReply();
                 try {
-                        var result = await youtubesearchapi.GetListByKeyword(arg,false,1,[{type:"video"}])
+                        var result = await youtubesearchapi.GetListByKeyword(arg,false,1,[{type:"video/playlist"}])
                 } catch (error) {
                         console.log('error when searching for video')
                         console.error(error)
+                        console.error(result)
+                        return
                 }
+                console.log(result);
+                if(result.items.length < 1){
+                        interaction.editReply("error getting the video, please use the name of the video instead")
+                        console.warn(`error getting ${arg}`)
+                        console.warn(result)
+                        return
+                }
+                if(result.items[0].type!="video"){
+                        interaction.editReply("didn't find a video please use URL")
+                        return
+                }
+
                 if(result.items[0].islive){
                         interaction.editReply('failed to acquire video')
                         return

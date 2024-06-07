@@ -14,7 +14,7 @@ async function updateQueue(){
         list.forEach(element => {
             queue.push(element)
         });
-        console.log(queue);
+        // console.log(queue);
         return list
     })    
 }
@@ -26,20 +26,37 @@ async function readQueue(){
         if (err) {
           console.error(err);
           return;
-        }
+        }else{
+          
         return data
+        }
     })    
 }
 
 async function addToQueue(id){
-    let content = await readQueue()
-    fs.writeFile(file, content, err => {
-        if (err) {
-          console.error(err);
-        } else {
-          // file written successfully
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+      }else{
+        console.log(data);
+        console.log(typeof(data));
+        if(data == ''){
+          fs.writeFile(file, id, err => {
+              if (err) {
+                console.error(err);
+              }
+            });
+        }else{
+          // console.log(`${content}\r\n${id}`);
+          fs.writeFile(file, `${data}\r\n${id}`, err => {
+              if (err) {
+                console.error(err);
+              }
+            });
         }
-      });
+      }
+  })
+    
 }
-addToQueue('sad')
+addToQueue('meurt')
 updateQueue()

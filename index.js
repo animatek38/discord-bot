@@ -12,7 +12,6 @@ const client = new Client({
     ]
 });
 const { token } = process.env
-console.log(token);
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
 
@@ -24,8 +23,8 @@ try {
 } catch (error) {
 	console.log('failed to create audio player')
 	console.log(error)
-} 	
-fs.rm('queue.txt')
+}
+
 // liste les commandes
 var commands = new Collection()
 var commandThatWillBeAdded = new Collection()
