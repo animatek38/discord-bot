@@ -6,15 +6,15 @@ module.exports = {
 		.setDescription('list the current queue'),
 
 	execute(interaction) {
-        interaction.deferReply()
         let output = '';
         if(global.queue.length == 0){
-            interaction.editReply('no song playing')
+            interaction.reply('no song playing')
             return
         }
 
         global.queue.forEach(e => {
-            output = output + output
+            output = output + e[1] + `\r\n`
         });
+        interaction.reply(output)
     }
 }

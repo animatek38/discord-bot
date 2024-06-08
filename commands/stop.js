@@ -12,6 +12,7 @@ module.exports = {
 		}
 		const connection = await getVoiceConnection(interaction.guildId);
 		connection.destroy();
+		global.queue = []
 		interaction.reply('left')
 	}
 }

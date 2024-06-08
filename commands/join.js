@@ -21,7 +21,7 @@ module.exports = {
         }
 
 
-        async function download(vidId) {
+        async function download(vidId, name) {
                 interaction.editReply(`downloading`)
                 try {
                         const {stdout, stderr} = await execPromise(`yt-dlp -P audio -o ${vidId} -x --audio-format opus ${vidId}`)
@@ -33,7 +33,7 @@ module.exports = {
                 }
 
                 console.log('finished downloading')
-                startPlaying(vidId)
+                startPlaying(vidId, name)
         }
 
         async function search(arg){
@@ -88,18 +88,18 @@ module.exports = {
                 fs.access(`./audio/${result.items[0].id}.opus`, fs.constants.F_OK, (err) => {
                         if(err){
                                 console.log(`downloading video ${result.items[0].title}`)
-                                download(result.items[0].id)
+                                download(result.items[0].id, result.items[0].title)
                         } else {
-                                startPlaying(result.items[0].id)
+                                startPlaying(result.items[0].id, result.items[0].title)
                         }
                       });
         }
         search(interaction.options.data[0].value)
         
-        function startPlaying(id) {
-                if(global.queue.length == 0){
-                addToQueue(id)
-                interaction.editReply(`playing`)
+        function startPlaying(id, name) {
+                addToQueue(id,name )
+                if(global.queue.length == 1){
+                interaction.editReply(`playing ${name}`)
                 const resource = createAudioResource(`./audio/${id}.opus`,{ inlineVolume: true });
                 const connection = joinVoiceChannel({
                 channelId: interaction.member.voice.channel.id,
@@ -110,7 +110,6 @@ module.exports = {
                 connection.subscribe(global.player);
                 }else{
                         interaction.editReply('added to queue')
-                        addToQueue(id)
                 }
         }
 
@@ -118,8 +117,8 @@ module.exports = {
 
 
         //functions that take care of the queue
-        function addToQueue(id) {
-                global.queue.push(id)
+        function addToQueue(id, name) {
+                global.queue.push([id, name])
         }
         
         function readQueue(params) {
@@ -134,7 +133,7 @@ module.exports = {
 	},
         playNext(){
 		console.log('playing next');
-                const resource = createAudioResource(`./audio/${global.queue[0]}.opus`,{ inlineVolume: true });
+                const resource = createAudioResource(`./audio/${global.queue[0][0]}.opus`,{ inlineVolume: true });
                 // const connection = joinVoiceChannel({
                 // channelId: interaction.member.voice.channel.id,
                 // guildId: interaction.member.voice.channel.guild.id,

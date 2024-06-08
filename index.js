@@ -100,8 +100,10 @@ player.on('stateChange', (oldState, newState) => {
 	console.log(typeof((newState.status)));
 	console.log(newState.status);
 	if(newState.status == 'idle'){
-		console.log('playing next');
 		global.queue.shift()
-		joinShit.playNext()
+		if (global.queue.length!=0) {
+			console.log('playing next');
+			joinShit.playNext()
+		}
 	}
 });
