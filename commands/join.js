@@ -140,7 +140,6 @@ module.exports = {
                 //         adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                 // });
                 const connection = getVoiceConnection('651120444237152266');
-                console.log(connection);
                 global.player.play(resource);
                 connection.subscribe(global.player);
         }

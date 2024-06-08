@@ -97,8 +97,6 @@ const AudioPlayerStatus  = require('@discordjs/voice')
 // });
 
 player.on('stateChange', (oldState, newState) => {
-	console.log(typeof((newState.status)));
-	console.log(newState.status);
 	if(newState.status == 'idle'){
 		global.queue.shift()
 		if (global.queue.length!=0) {
