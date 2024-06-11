@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "npm i && node .",
+    "start": "npm i && node .",
     "cache": "node clearCache.js"
   },
   "author": "",
