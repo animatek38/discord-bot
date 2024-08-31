@@ -1,3 +1,11 @@
-FROM node:18.16.1
+ARG NODE_VERSION=18.16.1
 
-CMD [ "npm start run" ]
+FROM node:${NODE_VERSION}-alpine
+
+WORKDIR /usr/src/app
+
+USER node
+
+COPY . .
+
+RUN npm run start
