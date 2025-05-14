@@ -1,22 +1,21 @@
 {
   "name": "bot",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm i && node .",
+    "start": "node .",
     "cache": "node clearCache.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.9.0",
-    "@discordjs/voice": "^0.17.0",
+    "@discordjs/opus": "^0.10.0",
+    "@discordjs/voice": "^0.18.0",
     "async": "^3.2.5",
-    "discord.js": "^14.15.2",
-    "dotenv": "^16.4.5",
-    "libsodium-wrappers": "^0.7.13",
-    "youtube-search-api": "^1.2.1"
+    "discord.js": "^14.19.3",
+    "libsodium-wrappers": "^0.7.15",
+    "youtube-search-api": "^1.2.2"
   }
 }

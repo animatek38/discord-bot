@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits, Collection, Routes, SlashCommandBuilder, Application } = require('discord.js');
 const fs = require('fs')
-require('dotenv').config()
 const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -11,7 +10,7 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions
     ]
 });
-const { token } = process.env
+const { token } = process.env.TOKEN
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
 
@@ -58,7 +57,13 @@ client.once('ready', () => {
 	console.log("finished updating command");
 });
 
-client.login(token)
+
+try{
+	client.login(token)
+}catch(error){
+	console.error(error);
+	process.exit(1);
+}
 
 client.on('interactionCreate', async interaction => {
 	if (interaction.isModalSubmit() || interaction.isButton()) {

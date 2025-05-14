@@ -1,11 +1,15 @@
-ARG NODE_VERSION=18.16.1
+#ARG NODE_VERSION=18.16.1
 
-FROM node:${NODE_VERSION}-alpine
+#FROM node:${NODE_VERSION}-alpine
 
-WORKDIR /usr/src/app
+FROM nikolaik/python-nodejs:latest
 
-USER node
+USER pn
 
-COPY . .
+WORKDIR /home/pn
 
-RUN npm run start
+COPY . /home/pn
+
+RUN npm install
+
+ENTRYPOINT npm run start
