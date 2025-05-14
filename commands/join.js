@@ -7,7 +7,7 @@ const  util  = require("util")
 const execPromise = util.promisify(exec);
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('join')
+		.setName('play')
 		.setDescription('join the voice channel')
 	        .addStringOption(option =>
 		        option.setName('video')
