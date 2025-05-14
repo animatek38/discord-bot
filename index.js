@@ -10,7 +10,8 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions
     ]
 });
-const { token } = process.env.TOKEN
+const token = process.env.TOKEN
+console.log(`token: ${token}`)
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node .",
+    "start": "node --env-file=.env index.js",
     "cache": "node clearCache.js"
   },
   "author": "",
@@ -16,6 +16,7 @@
     "async": "^3.2.5",
     "discord.js": "^14.19.3",
     "libsodium-wrappers": "^0.7.15",
-    "youtube-search-api": "^1.2.2"
+    "youtube-search-api": "^1.2.2",
+    "ffmpeg-static": "^5.2.0"
   }
 }
