@@ -13,12 +13,14 @@ const client = new Client({
 const token = process.env.TOKEN
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
+var commands = new Collection()
+var commandThatWillBeAdded = new Collection()
+const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'))
+const { OpusEncoder } = require('@discordjs/opus');
+const { generateDependencyReport, createAudioPlayer } = require('@discordjs/voice');
+const encoder = new OpusEncoder(48000, 2);
 
 try {
-	const { OpusEncoder } = require('@discordjs/opus');
-	const { generateDependencyReport, createAudioPlayer } = require('@discordjs/voice');
-	console.log(generateDependencyReport())
-	const encoder = new OpusEncoder(48000, 2);
 	global.queue = []
 	global.player = createAudioPlayer();
 } catch (error) {
@@ -27,9 +29,6 @@ try {
 }
 
 // liste les commandes
-var commands = new Collection()
-var commandThatWillBeAdded = new Collection()
-const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
