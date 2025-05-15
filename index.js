@@ -4,14 +4,13 @@ const client = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessageReactions
     ]
 });
 const token = process.env.TOKEN
-console.log(`token: ${token}`)
 const { REST } = require('@discordjs/rest');
 const rest = new REST({ version: '10' }).setToken(token);
 
@@ -36,24 +35,18 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
     commands.set(command.data.name, {data: command.data, execute: command.execute})
 }
-// When the client is ready, run this code (only once)
 
-var channel = []
-let clientId
+
+
+
+
 client.once('ready', () => {
 	console.log(`you can invite the bot with this link: https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=8`);
 	console.log(`Ready under the name of ${client.user.username}`);
-	clientid = client.user.id;
 
 	// update command
 	client.guilds.cache.forEach(i => {
-		updateCommand(client.user.id, i.id)
-		
-		let guildVar = client.guilds.cache.get(i.id)
-		guildVar.channels.cache.forEach(j => {	
-			if (j.type == 4) return
-			channel.push({type: j.type,name: j.name,id: j.id})
-		})
+		updateCommand(client.user.id, i.id)	
 	});
 	console.log("finished updating command");
 });
@@ -80,8 +73,7 @@ client.on('interactionCreate', async interaction => {
 })
 
 
-//met a jour les commandes
-
+//met a jour les commandes dans un server
 function updateCommand(clientId, serverId) {
 	rest.put(Routes.applicationCommands(clientId), { body: [] })
 	.catch(console.error);
@@ -98,10 +90,6 @@ function updateCommand(clientId, serverId) {
 
 const joinShit = require('./commands/join.js')
 const AudioPlayerStatus  = require('@discordjs/voice')
-// console.log(AudioPlayerStatus);
-// global.player.on(AudioPlayerStatus.Idle, () => {
-// });
-
 player.on('stateChange', (oldState, newState) => {
 	if(newState.status == 'idle'){
 		global.queue.shift()
