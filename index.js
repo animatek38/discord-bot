@@ -24,15 +24,19 @@ try {
 	global.queue = []
 	global.player = createAudioPlayer();
 } catch (error) {
-	console.log('failed to create audio player')
-	console.log(error)
+	console.error('failed to create audio player')
+	console.error(error)
 }
 
 // liste les commandes
 
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`)
-    commands.set(command.data.name, {data: command.data, execute: command.execute})
+	try{
+	const command = require(`./commands/${file}`)
+	commands.set(command.data.name, {data: command.data, execute: command.execute})
+	} catch(error){
+		console.error(error)
+	}
 }
 
 

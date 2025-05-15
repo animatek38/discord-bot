@@ -102,8 +102,8 @@ module.exports = {
                 interaction.editReply(`playing ${name}`)
                 const resource = createAudioResource(`./audio/${id}.opus`,{ inlineVolume: true });
                 const connection = joinVoiceChannel({
-                channelId: interaction.member.voice.channel.id,
-                guildId: interaction.member.voice.channel.guild.id,
+			channelId: interaction.member.voice.channel.id,
+			guildId: interaction.member.voice.channel.guild.id,
                         adapterCreator: interaction.member.voice.channel.guild.voiceAdapterCreator,
                 });
                 global.player.play(resource);
@@ -119,10 +119,6 @@ module.exports = {
         //functions that take care of the queue
         function addToQueue(id, name) {
                 global.queue.push([id, name])
-        }
-        
-        function readQueue(params) {
-                console.log(global.queue);
         }
         
         function removeFromQueue() {
