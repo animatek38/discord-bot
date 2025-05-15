@@ -2,5 +2,3 @@ services:
   web:
     build: .
     image: amatek0/discord-bot
-#    environment:
-#      TOKEN: NzgwODQwMzc0OTk0MDc1Njg4.GxgRlz.zg2DT7TpHAS6cmNLXSvM3V2wlH1_N7yAIC9b8Y
